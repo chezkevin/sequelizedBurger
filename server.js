@@ -7,21 +7,9 @@ var exprhbs = require('express-handlebars');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-// require sql connection via module exports
-var connection = require('./config/connection.js');
-
 /*********************
 End dependencies
 *********************/
-
-// if err, display error. Else, display SQL connection
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId);
-});
-
-// initialize the user-entered burgers array
-var userBurgers = [];
 
 // creates an instance of the express function
 var app = express();
