@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="center-container">
+		<div class="col-xs-3" >
+		</div>
+    <div class="col-xs-3 w-col">
+			<h3>Uneaten Burgers</h3>
+				<ul>
+					{{#each uneatenBurgers}}
+						<li>
+							<p> {{this.id}}. {{this.burger_name}}</p>
+						<a href="/burger-{{this.id}}">Devour!</a>
+						</li>
+					{{/each}}
+				</ul>
+		</div>
+		<div class="col-xs-3 w-col">
+			<h3>Eaten Burgers</h3	>
+				<ul>
+					{{#each eatenBurgers}}
+						<li>
+							<p> {{this.id}}. {{this.burger_name}}</p>
+						</li>
+					{{/each}}
+				</ul>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+body{
+  background-color: #FEE861;
+}
+h1,.container{
+  text-align: center;
+}
+img {
+    display: block;
+    margin: auto;
+}
+ol, ul {
+    list-style-type: none;
+}
+.w-col{
+    background-color: #EEEEEE;
+    border: 1px solid #AAAAAA;
+}
+.btn-block {
+    display: block;
+    width: auto;
+    margin: 0 auto;
+}
