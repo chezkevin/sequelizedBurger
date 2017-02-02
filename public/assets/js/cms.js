@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Getting jQuery references to the post body, title, form, and author select
   var burgerInput = $("#burger-name");
-  var cmsForm = $("#cms");
+  var cmsForm = $(".form");
 
   // Adding an event listener for when the form is submitted
   $(cmsForm).on("submit", handleFormSubmit);
@@ -24,56 +24,31 @@ $(document).ready(function() {
     }
     // Constructing a newBurger object to hand to the database
     var newBurger = {
-      burger_name: bodyInput
+      burger_name: burgerInput
         .val(),
       devoured: false
     };
 
+    // runs submitBurger function
+    submitBurger(newBurger);
   }
 
   // Submits a new post and brings user to blog page upon completion
   function submitBurger(burger) {
-    $.post("/api/burgers", post, function() {
+    $.post("/api/burgers", burger, function() {
       window.location.href = "/";
     });
   }
 
-  // Gets post data for the current post if we're editing, or if we're adding to an author's existing posts
-  function getPostData(id, type) {
-    var queryUrl;
-    switch (type) {
-      case "post":
-        queryUrl = "/api/posts/" + id;
-        break;
-      case "author":
-        queryUrl = "/api/authors/" + id;
-        break;
-      default:
-        return;
-    }
-    $.get(queryUrl, function(data) {
-      if (data) {
-        console.log(data.AuthorId || data.id)
-        // If this post exists, prefill our cms forms with its data
-        titleInput.val(data.title);
-        bodyInput.val(data.body);
-        authorId = data.AuthorId || data.id;
-        // If we have a post with this id, set a flag for us to know to update the post
-        // when we hit submit
-        updating = true;
-      }
-    });
-  }
-
-  // A function to get Authors and then render our list of Authors
+  // A function to get Burgers and then render our list of Burgers
   function getBurgers() {
-    $.get("/api/authors", renderAuthorList);
+    $.get("/api/burgers", renderAuthorList);
   }
   // Function to either render a list of authors, or if there are none, direct the user to the page
   // to create an author first
   function renderAuthorList(data) {
     if (!data.length) {
-      window.location.href = "/authors";
+      window.location.href = "/";
     }
     var rowsToAdd = [];
     for (var i = 0; i < data.length; i++) {
