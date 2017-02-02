@@ -4,36 +4,51 @@
 
 // Dependencies
 // =============================================================
-var Burger = require("../models/burger.js");
 
+// Requiring our models
+var db = require("../models");
 
 // Routes
 // =============================================================
 module.exports = function(app) {
 
-  // Get all books
-  app.get("/api/all", function(req, res) {
-
-    Burger.findAll({}).then(function(results) {
-      res.json(results);
+  // GET route for getting all of the posts
+    app.get("/", function(req, res) {
+      var query = {};
+      db.Burger.findAll({}).then(function(dbBurg) {
+        res.json(dbBurg);
+      });
     });
 
+  // POST route for saving a new post
+  app.post("/api/burgers", function(req, res) {
+    db.Burger.create(req.body).then(function(dbBurg) {
+      res.json(dbBurg);
+    });
   });
+  // Get all books
+  // app.get("/api/all", function(req, res) {
+  //
+  //   Burger.findAll({}).then(function(results) {
+  //     res.json(results);
+  //   });
+  //
+  // });
 
-  // Get a specific book
-  app.get("/api/:burger", function(req, res) {
-
-    if (req.params.burger) {
-      Burger.findAll({
-        where: {
-          title: req.params.burger
-        }
-      }).then(function(results) {
-        res.json(results);
-      });
-    }
-
-  });
+  // Get a specific burger
+  // app.get("/api/:burger", function(req, res) {
+  //
+  //   if (req.params.burger) {
+  //     Burger.findAll({
+  //       where: {
+  //         title: req.params.burger
+  //       }
+  //     }).then(function(results) {
+  //       res.json(results);
+  //     });
+  //   }
+  //
+  // });
 
   // Get all books of a specific genre
   // app.get("/api/genre/:genre", function(req, res) {
@@ -64,32 +79,5 @@ module.exports = function(app) {
   //   }
   //
   // });
-
-  // Add a book
-  app.post("/api/new", function(req, res) {
-
-    console.log("Book Data:");
-    console.log(req.body);
-    Book.create({
-      title: req.body.title,
-      author: req.body.author,
-      genre: req.body.genre,
-      pages: req.body.pages
-    });
-
-  });
-
-  // Delete a book
-  app.post("/api/delete", function(req, res) {
-
-    console.log("Book Data:");
-    console.log(req.body);
-    Book.destroy({
-      where: {
-        id: req.body.id
-      }
-    });
-
-  });
 
 };
