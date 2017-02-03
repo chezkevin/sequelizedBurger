@@ -19,8 +19,8 @@ $(document).ready(function() {
 
   // This function grabs burgers from the database and updates the view
   function getburgers() {
-    $.get("/", function(data) {
-      console.log("burgers", data);
+    $.get("/api", function(data) {
+      console.log("data begins: " + data);
       burgers = data;
       initializeRows();
     });
@@ -41,50 +41,31 @@ $(document).ready(function() {
   function initializeRows() {
     uneatenBurgerContainer.empty();
     var burgersToAdd = [];
+    console.log("burgers.length: " + burgers.length);
     for (var i = 0; i < burgers.length; i++) {
+      console.log(burgers[i]);
       burgersToAdd.push(createNewRow(burgers[i]));
     }
     uneatenBurgerContainer.append(burgersToAdd);
   }
-  
+
   // This function constructs a post's HTML
     function createNewRow(post) {
-      var formattedDate = new Date(post.createdAt);
-      formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a");
       var newPostPanel = $("<div>");
       newPostPanel.addClass("panel panel-default");
       var newPostPanelHeading = $("<div>");
       newPostPanelHeading.addClass("panel-heading");
       var deleteBtn = $("<button>");
-      deleteBtn.text("x");
+      deleteBtn.text("Devour!");
       deleteBtn.addClass("delete btn btn-danger");
-      var editBtn = $("<button>");
-      editBtn.text("EDIT");
-      editBtn.addClass("edit btn btn-info");
       var newPostTitle = $("<h2>");
       var newPostDate = $("<small>");
       var newPostAuthor = $("<h5>");
-      newPostAuthor.text("Written by: Author name display is in next activity when we learn joins!");
-      newPostAuthor.css({
-        float: "right",
-        color: "blue",
-        "margin-top":
-        "-10px"
-      });
-      var newPostPanelBody = $("<div>");
-      newPostPanelBody.addClass("panel-body");
-      var newPostBody = $("<p>");
-      newPostTitle.text(post.title + " ");
-      newPostBody.text(post.body);
-      newPostDate.text(formattedDate);
-      newPostTitle.append(newPostDate);
+      newPostTitle.text(post.burger_name + " ");
       newPostPanelHeading.append(deleteBtn);
-      newPostPanelHeading.append(editBtn);
       newPostPanelHeading.append(newPostTitle);
       newPostPanelHeading.append(newPostAuthor);
-      newPostPanelBody.append(newPostBody);
       newPostPanel.append(newPostPanelHeading);
-      newPostPanel.append(newPostPanelBody);
       newPostPanel.data("post", post);
       return newPostPanel;
     }

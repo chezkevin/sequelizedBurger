@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
   // 2. A burger name of type STRING
   // 3. A devoured property of type BOOLEAN
   // 4. A date property of date
-  var Burger = sequelize.define("burgers", {
+  var Burger = sequelize.define("Burger", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
