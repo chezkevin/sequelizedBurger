@@ -3,6 +3,7 @@ $(document).ready(function() {
 
   // uneatenBurgerContainer holds our uneaten burgers
   var uneatenBurgerContainer = $(".uneaten-burger-container");
+  var eatenBurgerContainer = $(".eaten-burger-container");
 
   // Click events for the edit and delete buttons
   //$(document).on("click", "button.delete", handlePostDelete);
@@ -20,7 +21,6 @@ $(document).ready(function() {
   // This function grabs burgers from the database and updates the view
   function getburgers() {
     $.get("/api", function(data) {
-      console.log("data begins: " + data);
       burgers = data;
       initializeRows();
     });
@@ -41,7 +41,6 @@ $(document).ready(function() {
   function initializeRows() {
     uneatenBurgerContainer.empty();
     var burgersToAdd = [];
-    console.log("burgers.length: " + burgers.length);
     for (var i = 0; i < burgers.length; i++) {
       console.log(burgers[i]);
       burgersToAdd.push(createNewRow(burgers[i]));
@@ -58,6 +57,7 @@ $(document).ready(function() {
       var deleteBtn = $("<button>");
       deleteBtn.text("Devour!");
       deleteBtn.addClass("delete btn btn-danger");
+      $(deleteBtn).attr('id', post.id);
       var newPostTitle = $("<h2>");
       var newPostDate = $("<small>");
       var newPostAuthor = $("<h5>");

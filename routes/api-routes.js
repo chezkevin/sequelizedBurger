@@ -14,11 +14,32 @@ module.exports = function(app) {
 
   // GET route for getting all of the posts
     app.get("/api", function(req, res) {
-      var query = {};
+      var object = {};
       db.Burger.findAll({}).then(function(dbBurg) {
-        console.log("db Burg data: " + dbBurg);
         res.json(dbBurg);
       });
+      // db.Burger.findAll({
+      //       where: {
+      //           devoured: false
+      //       }
+      //   }).then(function(result) {
+      //       object.uneatenBurgers = result;
+      //       return;
+      //   }).then(function() {
+      //     return Burger.findAll({
+      //         where: {
+      //             devoured: true
+      //         }
+      //     });
+      //   }).then(function(result) {
+      //       object.eatenBurgers = result;
+      //       return;
+      //   }).then(function() {
+      //       res.json('index', {
+      //           uneatenBurgers: object.uneatenBurgers,
+      //           eatenBurgers: object.eatenBurgers
+      //       });
+      //   });
     });
 
   // POST route for saving a new post
@@ -28,16 +49,16 @@ module.exports = function(app) {
     });
   });
 
-  // PUT route for updating burgers
-  app.put("/api/posts", function(req, res) {
-    db.Post.update(
-      req.body,
-      {
+  // PUT route for devouring burgers
+  app.put("/api/burgers", function(req, res) {
+    db.Burger.update({
+        devoured: true
+        },{
         where: {
           id: req.body.id
         }
-      }).then(function(dbPost) {
-        res.json(dbPost);
+      }).then(function(dbBurg) {
+        res.json(dbBurg);
       });
   });
 
